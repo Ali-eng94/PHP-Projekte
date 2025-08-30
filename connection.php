@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'Ali Haji';
+$dbname = 'Ali-Haji';
 $user = 'root';
 $pass = '';
 
@@ -13,4 +13,5 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 ?>
+
 
