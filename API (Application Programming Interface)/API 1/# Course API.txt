@@ -1,0 +1,123 @@
+# Course API
+
+## Description
+
+This API returns all courses from the database in JSON format.
+
+## File
+
+`index.php`
+
+## Code
+
+```php
+<?php
+
+header("Content-Type: application/json");
+
+require "connection.php";
+
+$sql = "SELECT * FROM course";
+
+$stmt = $pdo->query($sql);
+
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+echo json_encode([
+    "message" => "Get all courses",
+    "data" => $users
+]);
+?>
+```
+
+## Explanation
+
+### 1. JSON Header
+
+```php
+header("Content-Type: application/json");
+```
+
+Informs the browser that the response is being returned in JSON format.
+
+### 2. Database Connection
+
+```php
+require "connection.php";
+```
+
+Loads the PDO database connection.
+
+### 3. SQL Query
+
+```php
+$sql = "SELECT * FROM course";
+```
+
+Retrieves all records from the `course` table.
+
+### 4. Execute Query
+
+```php
+$stmt = $pdo->query($sql);
+```
+
+Executes the SQL query.
+
+### 5. Fetch Data
+
+```php
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+```
+
+Stores all results as an associative array.
+
+### 6. Output JSON
+
+```php
+echo json_encode([
+    "message" => "Get all courses",
+    "data" => $users
+]);
+```
+
+Returns the data as JSON. ## Example Output
+
+```json
+{
+  "message": "Get all courses",
+  "data": [
+    {
+      "id": 1,
+      "name": "PHP Course",
+      "email": "php@example.com",
+      "phone": "123456789"
+    },
+    {
+      "id": 2,
+      "name": "Python Course",
+      "email": "python@example.com",
+      "phone": "987654321"
+    }
+  ]
+}
+```
+
+## Prerequisites
+
+- PHP 8+
+- MySQL / MariaDB
+- PDO enabled
+- `course` table
+
+## Database Structure
+
+```sql
+CREATE TABLE course (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(50),
+    is_deleted TINYINT DEFAULT 0
+);
+```

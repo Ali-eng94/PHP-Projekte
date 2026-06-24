@@ -1,0 +1,238 @@
+# Users API Project
+
+## Overview
+
+This project demonstrates how to fetch user data from a PHP API and display it on a web page using JavaScript.
+
+The API returns data in JSON format, and the frontend uses the Fetch API to retrieve and display the information.
+
+---
+
+## Project Structure
+
+```text
+API 1/
+│
+├── connection.php
+├── usersApiEndPoint.php
+│
+API 2/
+│
+├── index.html
+```
+
+---
+
+## API Endpoint
+
+### File
+
+```php
+usersApiEndPoint.php
+```
+
+### Code
+
+```php
+<?php
+
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+
+require "connection.php";
+
+$sql = "SELECT * FROM course";
+
+$stmt = $pdo->query($sql);
+
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+echo json_encode([
+    "message" => "Add item in a table",
+    "data" => $users
+]);
+
+?>
+```
+
+### Explanation
+
+#### Content-Type Header
+
+```php
+header("Content-Type: application/json");
+```
+
+Tells the browser that the response will be returned as JSON.
+
+#### CORS Header
+
+```php
+header("Access-Control-Allow-Origin: *");
+```
+
+Allows requests from other websites and applications.
+
+#### Database Connection
+
+```php
+require "connection.php";
+```
+
+Loads the database connection.
+
+#### SQL Query
+
+```php
+$sql = "SELECT * FROM course";
+```
+
+Retrieves all records from the `course` table.
+
+#### Execute Query
+
+```php
+$stmt = $pdo->query($sql);
+```
+
+Runs the SQL query.
+
+#### Fetch Data
+
+```php
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+```
+
+Gets all rows as an associative array.
+
+#### Return JSON
+
+```php
+echo json_encode([
+    "message" => "Add item in a table",
+    "data" => $users
+]);
+```
+
+Returns the data in JSON format.
+
+---
+
+## Frontend
+
+### File
+
+```html
+index.html
+```
+
+### Code
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Users List</title>
+
+    <style>
+        .user-card{
+            border:1px solid #ccc;
+            padding:10px;
+            margin:10px;
+            background:cyan;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Users List</h1>
+
+<div id="userslist"></div>
+
+<script>
+
+fetch("http://localhost/API%20(Application%20Programming%20Interface)/API%201/usersApiEndPoint.php")
+.then(response => response.json())
+.then(data => {
+
+    const usersList =
+        document.getElementById("userslist");
+
+    data.data.forEach(user => {
+
+        const userDiv =
+            document.createElement("div");
+
+        userDiv.classList.add("user-card");
+
+        userDiv.innerHTML = `
+            <strong>Name:</strong> ${user.name}<br>
+            <strong>Email:</strong> ${user.email}<br>
+            <strong>Phone:</strong> ${user.phone}
+        `;
+
+        usersList.appendChild(userDiv);
+
+    });
+
+})
+.catch(error => {
+    console.error(error);
+});
+
+</script>
+
+</body>
+</html>
+```
+
+---
+
+## JSON Response Example
+
+```json
+{
+  "message": "Add item in a table",
+  "data": [
+    {
+      "id": 1,
+      "name": "Ali Haji",
+      "email": "alihaji@example.com",
+      "phone": "123456789"
+    }
+  ]
+}
+```
+
+---
+
+## Database Table
+
+```sql
+CREATE TABLE course (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(50),
+    is_deleted TINYINT(1) DEFAULT 0
+);
+```
+
+---
+
+## Technologies Used
+
+- PHP
+- MySQL
+- PDO
+- JSON
+- JavaScript
+- Fetch API
+- HTML
+- CSS
+
+---
+
+## Author
+
+Ali Haji

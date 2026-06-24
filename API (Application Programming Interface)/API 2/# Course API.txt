@@ -1,0 +1,234 @@
+# Users API Frontend
+
+## Description
+
+This project fetches user data from an API endpoint and displays it dynamically on a web page using JavaScript.
+
+The application uses the Fetch API to retrieve JSON data and creates user cards for each user returned by the API.
+
+---
+
+## Features
+
+* Fetch data from a PHP API endpoint
+* Display users dynamically without reloading the page
+* Simple and responsive card layout
+* Error handling using `catch()`
+
+---
+
+## HTML Structure
+
+```html
+<h1>ADD Them in a table</h1>
+<section id="userslist"></section>
+```
+
+### Explanation
+
+* `<h1>` displays the page title.
+* `<section id="userslist">` is the container where user cards will be inserted dynamically.
+
+---
+
+## CSS Styling
+
+```css
+.user-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: cyan;
+    font-size: 26px;
+}
+```
+
+### Explanation
+
+* `border` adds a border around each card.
+* `padding` creates space inside the card.
+* `margin` creates space between cards.
+* `border-radius` rounds the corners.
+* `background-color` sets the card background color.
+* `font-size` increases text size.
+
+---
+
+## JavaScript Code
+
+```javascript
+fetch('usersApiEndPoint.php')
+    .then(response => response.json())
+    .then(data => {
+
+        const usersList =
+            document.getElementById('userslist');
+
+        data.data.forEach(user => {
+
+            const userDiv =
+                document.createElement('div');
+
+            userDiv.classList.add('user-card');
+
+            userDiv.textContent =
+                `Name: ${user.name},
+                 Email: ${user.email},
+                 Phone: ${user.phone}`;
+
+            usersList.appendChild(userDiv);
+
+        });
+
+    })
+    .catch(error =>
+        console.error(
+            'Error fetching users:',
+            error
+        )
+    );
+```
+
+---
+
+## How It Works
+
+### 1. Fetch Data
+
+```javascript
+fetch('usersApiEndPoint.php')
+```
+
+Sends a GET request to the API endpoint.
+
+---
+
+### 2. Convert Response to JSON
+
+```javascript
+response.json()
+```
+
+Converts the API response into a JavaScript object.
+
+---
+
+### 3. Access the Container
+
+```javascript
+const usersList =
+    document.getElementById('userslist');
+```
+
+Selects the HTML section where user cards will be displayed.
+
+---
+
+### 4. Loop Through Users
+
+```javascript
+data.data.forEach(user => {
+```
+
+Iterates through each user returned by the API.
+
+---
+
+### 5. Create User Card
+
+```javascript
+const userDiv =
+    document.createElement('div');
+```
+
+Creates a new `<div>` element.
+
+---
+
+### 6. Add CSS Class
+
+```javascript
+userDiv.classList.add('user-card');
+```
+
+Applies the predefined CSS styling.
+
+---
+
+### 7. Insert User Data
+
+```javascript
+userDiv.textContent =
+`Name: ${user.name},
+ Email: ${user.email},
+ Phone: ${user.phone}`;
+```
+
+Displays the user information inside the card.
+
+---
+
+### 8. Add Card to Page
+
+```javascript
+usersList.appendChild(userDiv);
+```
+
+Adds the card to the HTML page.
+
+---
+
+### 9. Error Handling
+
+```javascript
+.catch(error =>
+    console.error(
+        'Error fetching users:',
+        error
+    )
+);
+```
+
+Logs errors if the API request fails.
+
+---
+
+## Example API Response
+
+```json
+{
+    "message": "Get all users",
+    "data": [
+        {
+            "name": "Ali",
+            "email": "ali@example.com",
+            "phone": "123456789"
+        },
+        {
+            "name": "Hasan",
+            "email": "hasan@example.com",
+            "phone": "987654321"
+        }
+    ]
+}
+```
+
+---
+
+## Technologies Used
+
+* HTML5
+* CSS3
+* JavaScript (Fetch API)
+* PHP
+* MySQL
+* JSON
+
+---
+
+## Author
+
+Ali Haji
+
+Frontend application that consumes a PHP API and displays user information dynamically.

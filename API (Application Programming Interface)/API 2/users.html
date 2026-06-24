@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .user-card {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 5px;
+        background-color: cyan;
+        font-size: 26px;
+    }
+</style>
+
+<body>
+    <h1>ADD Them in a table</h1>
+    <section id="userslist"></section>
+    <script>
+        fetch('usersApiEndPoint.php')
+            .then(response => response.json())
+            .then(data => {
+                const usersList = document.getElementById('userslist');
+                data.data.forEach(user => {
+                    const userDiv = document.createElement('div');
+                    userDiv.classList.add('user-card');
+                    userDiv.textContent = `Name: ${user.name}, Email: ${user.email}, Phone: ${user.Phone}`;
+                    usersList.appendChild(userDiv);
+                });
+            })
+            .catch(error => console.error('Error fetching users:', error));
+    </script>
+</body>
+
+</html>
